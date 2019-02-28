@@ -1,4 +1,6 @@
 -- first game devloped in lua with GD50 course
+-- before running this simple example in case of 1st run with LOVE framework
+-- remember to add love dictionary to PATH
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 

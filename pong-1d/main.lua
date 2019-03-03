@@ -37,14 +37,15 @@ VIRTUAL_HEIGHT = 243
 ]]
 function love.load()
     --[[
-        in order to make the graphics look more "retro" there is a way to set some
-        default filter - it sets the texture scaling filter when minimizing and
-        magnifying textures and fonts; default setting is bilinear (causes 
+        in order to make the graphics look more "retro" there is a way to set 
+        some default filter - it sets the texture scaling filter when minimizing
+        and magnifying textures and fonts; default setting is bilinear (causes 
         blurriness) and the setting to get more retro look is "nearest"
     ]]
+    love.graphics.setDefaultFilter('nearest', 'nearest')
     --[[
         virtual resulotion is now used to initialize game window with the push
-        library function already imported
+        library function - "setupScreen" - already imported
     ]]
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, 
     WINDOW_HEIGHT, {
@@ -52,15 +53,40 @@ function love.load()
         resizable = false,
         vsync = true
     })
-
-
-
-
+end
 --[[
     keypressed(key) is a callback love2d function that executes whenever the
-    key is pressed - has to be implemented in at least one of the main
-    functions: load, update, draw
+    key is pressed - it is called for each frame
 ]]
+function love.keypressed(key)
+    -- keys can be accessed by string name
+    if key == 'escape' then
+        -- event.quit - a simple function that terminates application
+        love.event.quit()
+    end
+end
 
--- event.quit - a simple function that terminates application
-
+--[[
+    after calling initialization or each update the script will now deliver
+    the update to the screen with draw function
+]]
+function love.draw()
+    --[[
+        begin rendering at virtual resolution - the rendering will be done for
+        everything in between 'start' and 'end'
+    ]]
+    push:apply('start')
+    --[[
+        in this case the draw function will run the printf function that is 
+        used to printout msg on game window (not consol) with additional 
+        parameters but using the virtual resolution:
+    ]]
+    love.graphics.printf(
+        'Hello Pong!',          -- text to wright - default font = 12px
+        0,                      -- starting at x=0 (centered based on width)
+        VIRTUAL_HEIGHT / 2-6,    -- starting y (halfway down the virt screen)
+        VIRTUAL_WIDTH,           -- number of pixels to center with
+        'center'                -- alignment mode (can be "left", etc.)
+        )
+    push:apply('end')
+end

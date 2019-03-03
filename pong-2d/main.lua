@@ -51,10 +51,8 @@ function love.load()
         resizable = false,
         vsync = true
     })
-
-
-
 end
+
 -- keypress function for game quit
 function love.keypressed(key)
     -- keys can be accessed by string name
@@ -70,20 +68,24 @@ function love.draw()
     push:apply('start')
 
     --[[
-        graphics.clear(r, g, b, a) sets up the backround color in RGB with last
-        parameter of alpha (opacity)
+        graphics.clear() clears the screen and set it up to background color
+        graphics.setBackgroundColor(r,g,b) sets up the background color
+        changed in v11 (in previous versions the clear functio had option to
+        set up background color)
     ]]
-    -- clear the screen with a specific color, 255 alpha is a no-transparency
-    love.graphics.clear(40, 45, 52, 255)
+    -- set up background color - grey
+    love.graphics.setBackgroundColor(.5,.5,0,1)
+    -- clear the screen with a previously defined background color
+    -- love.graphics.clear()
 
     -- printf function with game title updated
-    love.graphics.printf(
-        'Hello Pong!',          -- text to wright
-        0,                      -- starting at x=0 (centered based on width)
-        20,                     -- starting y - slightly off the top
-        VIRTUAL_WIDTH,          -- number of pixels to center with
-        'center'                -- alignment mode (can be "left", etc.)
-        )
+        love.graphics.printf(
+            'Hello Pong!',          -- text to wright
+            0,                      -- starting at x=0 (centered based on width)
+            20,                     -- starting y - slightly off the top
+            VIRTUAL_WIDTH,          -- number of pixels to center with
+            'center'                -- alignment mode (can be "left", etc.)
+            )
 
     --[[
         graphics.rectangle(mode, x, y, width, height) is a function used to

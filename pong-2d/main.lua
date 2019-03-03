@@ -96,7 +96,8 @@ function love.draw()
     -- render 2nd paddle - right side
     love.graphics.rectangle('fill', VIRTUAL_WIDTH-10, VIRTUAL_HEIGHT-50, 5, 20)
     -- render ball (at center) - there is "-2" as the ball is 4x4 size
-    love.graphics.rectangle('fill', VIRTUAL_WIDTH/2 -2, VIRTUAL_HEIGHT/2 -2, 4, 4)
-
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH/2 -2, VIRTUAL_HEIGHT/2 -2, 
+    4, 4)
+    love.graphics.setBackgroundColor(.5,.5,0,1)
     push:apply('end')
 end

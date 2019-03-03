@@ -52,10 +52,7 @@ function love.load()
         vsync = true
     })
 
-    --[[
-        graphics.rectangle(mode, x, y, width, height) is a function used to
-        build blocks of rectangles that will represent paddles and ball
-    ]]
+
 
 end
 -- keypress function for game quit
@@ -76,7 +73,7 @@ function love.draw()
         graphics.clear(r, g, b, a) sets up the backround color in RGB with last
         parameter of alpha (opacity)
     ]]
-    -- clear the screen with a specific color, 255 alpha is a full transparency
+    -- clear the screen with a specific color, 255 alpha is a no-transparency
     love.graphics.clear(40, 45, 52, 255)
 
     -- printf function with game title updated
@@ -88,7 +85,16 @@ function love.draw()
         'center'                -- alignment mode (can be "left", etc.)
         )
 
-    
+    --[[
+        graphics.rectangle(mode, x, y, width, height) is a function used to
+        build blocks of rectangles that will represent paddles and ball
+    ]]
+    -- render 1st paddle - left side
+    love.graphics.rectangle('fill', 10, 30, 5, 20)
+    -- render 2nd paddle - right side
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH-10, VIRTUAL_HEIGHT-50, 5, 20)
+    -- render ball (at center) - there is "-2" as the ball is 4x4 size
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH/2 -2, VIRTUAL_HEIGHT/2 -2, 4, 4)
 
     push:apply('end')
 end

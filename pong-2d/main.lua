@@ -32,6 +32,18 @@ VIRTUAL_HEIGHT = 243
 function love.load()
     -- retro graphic setting
     love.graphics.setDefaultFilter('nearest', 'nearest')
+
+    --[[
+        graphics.newFont(path, size) is the functio that will load a new font
+        into memory to then use it globally inside the game script with
+        graphics.setFont(font) function
+    ]]
+    -- new font object import - has to be in the same directory
+    smallFont = love.graphics.newFont('font.ttf', 8)
+
+    -- set love2d active font to the new one
+    love.graphics.setFont(smallFont)
+
     -- push setupScreen function for game window settings
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, 
     WINDOW_HEIGHT, {
@@ -39,6 +51,12 @@ function love.load()
         resizable = false,
         vsync = true
     })
+
+    --[[
+        graphics.rectangle(mode, x, y, width, height) is a function used to
+        build blocks of rectangles that will represent paddles and ball
+    ]]
+
 end
 -- keypress function for game quit
 function love.keypressed(key)
@@ -53,13 +71,24 @@ end
 function love.draw()
     -- begin rendering at virtual resolution
     push:apply('start')
-    -- printf function with game title
+
+    --[[
+        graphics.clear(r, g, b, a) sets up the backround color in RGB with last
+        parameter of alpha (opacity)
+    ]]
+    -- clear the screen with a specific color, 255 alpha is a full transparency
+    love.graphics.clear(40, 45, 52, 255)
+
+    -- printf function with game title updated
     love.graphics.printf(
-        'Hello Pong!',          -- text to wright - default font = 12px
+        'Hello Pong!',          -- text to wright
         0,                      -- starting at x=0 (centered based on width)
-        VIRTUAL_HEIGHT / 2-6,    -- starting y (halfway down the virt screen)
-        VIRTUAL_WIDTH,           -- number of pixels to center with
+        20,                     -- starting y - slightly off the top
+        VIRTUAL_WIDTH,          -- number of pixels to center with
         'center'                -- alignment mode (can be "left", etc.)
         )
+
+    
+
     push:apply('end')
 end

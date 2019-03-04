@@ -74,7 +74,7 @@ function love.draw()
         set up background color)
     ]]
     -- set up background color - grey
-    love.graphics.setBackgroundColor(.5,.5,0,1)
+    love.graphics.setBackgroundColor(.5,.5,0)
     -- clear the screen with a previously defined background color
     -- love.graphics.clear()
 
@@ -98,6 +98,6 @@ function love.draw()
     -- render ball (at center) - there is "-2" as the ball is 4x4 size
     love.graphics.rectangle('fill', VIRTUAL_WIDTH/2 -2, VIRTUAL_HEIGHT/2 -2, 
     4, 4)
-    love.graphics.setBackgroundColor(.5,.5,0,1)
+
     push:apply('end')
 end

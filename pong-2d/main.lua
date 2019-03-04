@@ -65,6 +65,7 @@ end
 -- call draw function
 function love.draw()
     -- begin rendering at virtual resolution
+    --love.graphics.setBackgroundColor(.5,.5,0)
     push:apply('start')
 
     --[[
@@ -73,9 +74,10 @@ function love.draw()
         changed in v11 (in previous versions the clear functio had option to
         set up background color)
     ]]
-    -- set up background color - grey
-    love.graphics.setBackgroundColor(.5,.5,0)
-    -- clear the screen with a previously defined background color
+    --[[
+        clear the screen with a previously defined background color - worked
+        with previous version (<11) of Love2D
+    ]] 
     -- love.graphics.clear()
 
     -- printf function with game title updated
@@ -100,4 +102,6 @@ function love.draw()
     4, 4)
 
     push:apply('end')
+    -- set up background color - grey
+    love.graphics.setBackgroundColor(.157,.176,.204)
 end

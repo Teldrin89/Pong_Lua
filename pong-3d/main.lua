@@ -35,4 +35,33 @@ VIRTUAL_HEIGHT = 243
 ]]
 -- setup the pad speed variable - 200 (arbitrary value)
 PADDLE_SPEED = 200
+
 -- game init
+function love.load()
+    -- retro graphic setting
+    love.graphics.setDefaultFilter('nearest', 'nearest')
+
+    -- new font object import - has to be in the same directory
+    smallFont = love.graphics.newFont('font.ttf', 8)
+    -- larger font setup for score
+    scoreFont = love.graphics.newFont('font.ttf', 32)
+
+    -- set love2d active font to the new one
+    love.graphics.setFont(smallFont)
+
+    -- push setupScreen function for game window settings
+    push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, 
+    WINDOW_HEIGHT, {
+        fullscreen = false,
+        resizable = false,
+        vsync = true
+    })
+
+    -- initialize scroe variables for both players (used later for rendering)
+    player1Score = 0
+    player2Score = 0
+
+    -- initial position of paddles on Y axis
+    player1Y = 30
+    player2Y = VIRTUAL_HEIGHT - 50
+end

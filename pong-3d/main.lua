@@ -28,11 +28,6 @@ push = require 'push'
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
---[[
-    keyboard.isDown(key) - a function that returns true or false depending on
-    whether the specified key is currently held down (different from 
-    keypressed(key) function as that one only fire its code once)
-]]
 -- setup the pad speed variable - 200 (arbitrary value)
 PADDLE_SPEED = 200
 
@@ -64,4 +59,33 @@ function love.load()
     -- initial position of paddles on Y axis
     player1Y = 30
     player2Y = VIRTUAL_HEIGHT - 50
+end
+
+--[[
+    update(dt) is an update function that runs every frame, with dt passed in -
+    delta time in second since the last frame
+]]
+function love.update(dt)
+    --[[
+    keyboard.isDown(key) - a function that returns true or false depending on
+    whether the specified key is currently held down (different from 
+    keypressed(key) function as that one only fire its code once)
+    ]]
+    -- player 1 movement
+    if love.keyboard.isDown('w') then
+        -- add negative paddle speed to current Y (scaled by dt)
+        player1Y = player1Y + -PADDLE_SPEED*dt
+    elseif love.keyboard.isDown('s') then
+        -- add positive paddle speed to current Y (scaled by dt)
+        player1Y = player1Y + PADDLE_SPEED*dt
+    end
+
+    -- the same movement setup for player 2 (up and down keys)
+    if love.keyboard.isDown('up') then
+        -- add negative paddle speed to current Y (scaled by dt)
+        player2Y = player2Y + -PADDLE_SPEED*dt
+    elseif love.keyboard.isDown('down') then
+        -- add positive paddle speed to current Y (scaled by dt)
+        player2Y = player2Y + PADDLE_SPEED*dt
+    end
 end

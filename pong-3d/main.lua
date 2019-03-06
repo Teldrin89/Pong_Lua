@@ -89,3 +89,60 @@ function love.update(dt)
         player2Y = player2Y + PADDLE_SPEED*dt
     end
 end
+
+-- keypress function for game quit
+function love.keypressed(key)
+    -- keys can be accessed by string name
+    if key == 'escape' then
+        -- event.quit - a simple function that terminates application
+        love.event.quit()
+    end
+end
+
+-- call draw function
+function love.draw()
+    -- begin rendering at virtual resolution
+    push:apply('start')
+
+    -- draw welcome text with small font
+    love.graphics.setFont(smallFont)
+    -- printf function with game title
+        love.graphics.printf(
+            'Hello Pong!',          -- text to wright
+            0,                      -- starting at x=0 (centered based on width)
+            20,                     -- starting y - slightly off the top
+            VIRTUAL_WIDTH,          -- number of pixels to center with
+            'center'                -- alignment mode (can be "left", etc.)
+            )
+    
+    -- setup the larger font for score
+    love.graphics.setFont(scoreFont)
+    --[[
+        printout the score for both players using print function and
+        changing the variable type to string
+    ]] 
+    -- score for player 1
+    love.graphics.print(
+        tostring(player1Score),
+        VIRTUAL_WIDTH/2 - 50,
+        VIRTUAL_HEIGHT/3
+                    )
+    -- score for player 2
+    love.graphics.print(
+        tostring(player2Score),
+        VIRTUAL_WIDTH/2 + 30,
+        VIRTUAL_HEIGHT/3
+                    )
+
+    -- render 1st paddle - left side
+    love.graphics.rectangle('fill', 10, 30, 5, 20)
+    -- render 2nd paddle - right side
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH-10, VIRTUAL_HEIGHT-50, 5, 20)
+    -- render ball (at center) - there is "-2" as the ball is 4x4 size
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH/2 -2, VIRTUAL_HEIGHT/2 -2, 
+    4, 4)
+
+    push:apply('end')
+    -- set up background color - grey
+    love.graphics.setBackgroundColor(.157,.176,.204)
+end

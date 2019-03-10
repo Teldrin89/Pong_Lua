@@ -82,7 +82,17 @@ function love.load()
     ballX = VIRTUAL_WIDTH/2 - 2
     ballY = VIRTUAL_HEIGHT/2 - 2
 
-    -- initialize ball speed with change and math.random function
+    --[[
+        initialize ball speed with change and math.random function - for
+        velocity in X direction there is additional "if" check (???)
+    ]] 
     ballDX = math.random(2) == 1 and 100 or -100
     ballDY = math.random(-50, 50)
+
+    --[[
+        define game state variable that then will be used to transition between
+        different parts of the game - used to determine behavior during render
+        and update state
+    ]] 
+    gameState = 'start'
 end

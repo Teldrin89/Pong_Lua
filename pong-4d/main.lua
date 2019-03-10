@@ -31,23 +31,16 @@ VIRTUAL_HEIGHT = 243
 -- setup the pad speed variable - 200 (arbitrary value)
 PADDLE_SPEED = 200
 
-
---[[
-    os.time - a lua function that returns a current time in unix epoch time
-    format (seconds, starting from 00:00:00 UTC Jan 1, 1970)
-]]
---[[
-    math.random(min, max) - a lua function that returns a random number,
-    dependent on the seeded random number generator, between min and max 
-    (inlcusively)
-]]
-
 -- game init
 function love.load()
     --[[
-    math.randomseed(num) - a lua function for random number generation, takes
-    some inital value and takes then some math operation to get different
-    number every time (it's then passed to random generator)
+        math.randomseed(num) - lua function for random number generation, takes
+        some inital value and takes then some math operation to get different
+        number every time (it's then passed to random generator)
+    ]]
+    --[[
+        os.time - a lua function that returns a current time in unix epoch time
+        format (seconds, starting from 00:00:00 UTC Jan 1, 1970)
     ]]
     -- calling randomseed function, passing the current time in seconds
     math.randomseed(os.time())
@@ -83,6 +76,11 @@ function love.load()
     ballY = VIRTUAL_HEIGHT/2 - 2
 
     --[[
+        math.random(min, max) - a lua function that returns a random number,
+        dependent on the seeded random number generator, between min and max 
+        (inlcusively)
+    ]]
+    --[[
         initialize ball speed with change and math.random function - for
         velocity in X direction there is additional "if" check (???)
     ]] 
@@ -95,4 +93,42 @@ function love.load()
         and update state
     ]] 
     gameState = 'start'
+end
+
+-- update(dt) is an update function that runs every frame
+function love.update(dt)
+    -- player 1 movement
+    if love.keyboard.isDown('w') then
+        --[[ 
+            add negative paddle speed to current Y (scaled by dt) - adjusted
+            for the screen bounds with math.max function (returns grater of two
+            values) 
+        ]]
+        player1Y = math.max(0, player1Y + -PADDLE_SPEED*dt)
+    elseif love.keyboard.isDown('s') then
+        --[[ 
+            add positive paddle speed to current Y (scaled by dt) - adjusted
+            for the screen bounds with math.min function (taken into account
+            also the size of the paddle)
+        ]]
+        player1Y = math.min(VIRTUAL_HEIGHT-20, player1Y + PADDLE_SPEED*dt)
+    end
+
+    -- the same movement setup for player 2 (up and down keys)
+    if love.keyboard.isDown('up') then
+        -- add negative paddle speed to current Y (scaled by dt) - similar to P1
+        player2Y = math.max(0, player2Y + -PADDLE_SPEED*dt)
+    elseif love.keyboard.isDown('down') then
+        -- add positive paddle speed to current Y (scaled by dt) - similar to P1
+        player2Y = math.min(VIRTUAL_HEIGHT-20, player2Y + PADDLE_SPEED*dt)
+    end
+
+    --[[
+        update ball based on its DX and DY only in play state - velocity is
+        scaled based on dt so movement is framerate-independet
+    ]]
+    if gameState == 'play' then
+        ballX = ballX + ballDX*dt
+        ballY = ballY + ballDY*dt
+    end
 end

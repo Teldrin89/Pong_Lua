@@ -172,7 +172,7 @@ function love.draw()
     -- printf function with game title - depending on the game state
     if gameState == 'start' then
         love.graphics.printf(
-            'Hello Start!',          -- text to wright
+            'Hello Start!',         -- text to wright
             0,                      -- starting at x=0 (centered based on width)
             20,                     -- starting y - slightly off the top
             VIRTUAL_WIDTH,          -- number of pixels to center with
@@ -187,7 +187,6 @@ function love.draw()
             'center'                -- alignment mode (can be "left", etc.)
                 )
     end
-    
     -- setup the larger font for score
     love.graphics.setFont(scoreFont) 
     -- score for player 1
@@ -202,7 +201,6 @@ function love.draw()
         VIRTUAL_WIDTH/2 + 30,
         VIRTUAL_HEIGHT/3
                     )
-
     -- render 1st paddle - left side - now with player "Y" variable
     love.graphics.rectangle('fill', 10, player1Y, 5, 20)
     -- render 2nd paddle - right side - now with player "Y" variable

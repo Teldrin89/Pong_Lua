@@ -82,7 +82,9 @@ function love.load()
     ]]
     --[[
         initialize ball speed with change and math.random function - for
-        velocity in X direction there is additional "if" check (???)
+        velocity in X direction there is additional ternary if operation - 
+        if math.random(2) is equal to 1 then the value is 100 and if not then
+        the value is -100
     ]] 
     ballDX = math.random(2) == 1 and 100 or -100
     ballDY = math.random(-50, 50)
@@ -132,3 +134,32 @@ function love.update(dt)
         ballY = ballY + ballDY*dt
     end
 end
+
+-- keypress function - expanded for game state definition
+function love.keypressed(key)
+    -- defining quit game key - escape
+    if key == 'escape' then
+        -- event.quit - a simple function that terminates application
+        love.event.quit()
+    -- defining start game key - enter/return - changes state to "play"
+    elseif key == 'enter' or key == 'return' then
+        -- if the game state is 'start' then set it to 'play'
+        if gameState == 'start' then
+            gameState = 'play'
+        -- otherwise set game state to start and set initial values
+        else
+            gameState = 'start'
+            -- set ball's starting position - middle of the screen
+            ballX = VIRTUAL_WIDTH/2 - 2
+            ballY = VIRTUAL_HEIGHT/2 - 2
+            --[[
+                set ball's initial velocity in X and Y direction using the
+                math.random and using the same ternary operation as in load 
+                function
+            ]]
+            ballDX = math.random(2) == 1 and 100 or -100
+            ballDY = math.random(-50, 50)
+        end
+    end
+end
+

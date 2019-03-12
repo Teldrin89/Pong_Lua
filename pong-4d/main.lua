@@ -163,3 +163,54 @@ function love.keypressed(key)
     end
 end
 
+-- call draw function
+function love.draw()
+    -- begin rendering at virtual resolution
+    push:apply('start')
+    -- draw welcome text with small font
+    love.graphics.setFont(smallFont)
+    -- printf function with game title - depending on the game state
+    if gameState == 'start' then
+        love.graphics.printf(
+            'Hello Start!',          -- text to wright
+            0,                      -- starting at x=0 (centered based on width)
+            20,                     -- starting y - slightly off the top
+            VIRTUAL_WIDTH,          -- number of pixels to center with
+            'center'                -- alignment mode (can be "left", etc.)
+                )
+    else
+        love.graphics.printf(
+            'Hello Play!',          -- text to wright
+            0,                      -- starting at x=0 (centered based on width)
+            20,                     -- starting y - slightly off the top
+            VIRTUAL_WIDTH,          -- number of pixels to center with
+            'center'                -- alignment mode (can be "left", etc.)
+                )
+    end
+    
+    -- setup the larger font for score
+    love.graphics.setFont(scoreFont) 
+    -- score for player 1
+    love.graphics.print(
+        tostring(player1Score),
+        VIRTUAL_WIDTH/2 - 50,
+        VIRTUAL_HEIGHT/3
+                    )
+    -- score for player 2
+    love.graphics.print(
+        tostring(player2Score),
+        VIRTUAL_WIDTH/2 + 30,
+        VIRTUAL_HEIGHT/3
+                    )
+
+    -- render 1st paddle - left side - now with player "Y" variable
+    love.graphics.rectangle('fill', 10, player1Y, 5, 20)
+    -- render 2nd paddle - right side - now with player "Y" variable
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH-10, player2Y, 5, 20)
+    -- render ball (at center) - use the new ball X and Y coordinates
+    love.graphics.rectangle('fill', ballX, ballY, 4, 4)
+    -- end rendering at virtual resolution
+    push:apply('end')
+    -- set up background color - grey
+    love.graphics.setBackgroundColor(.157,.176,.204)
+end

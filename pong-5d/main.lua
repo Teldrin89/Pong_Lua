@@ -152,3 +152,53 @@ function love.keypressed(key)
         end
     end
 end
+
+-- call draw function
+function love.draw()
+    -- begin rendering at virtual resolution
+    push:apply('start')
+    -- draw welcome text with small font
+    love.graphics.setFont(smallFont)
+    -- printf function with game title - depending on the game state
+    if gameState == 'start' then
+        love.graphics.printf(
+            'Hello Start!',         -- text to wright
+            0,                      -- starting at x=0 (centered based on width)
+            20,                     -- starting y - slightly off the top
+            VIRTUAL_WIDTH,          -- number of pixels to center with
+            'center'                -- alignment mode (can be "left", etc.)
+                )
+    else
+        love.graphics.printf(
+            'Hello Play!',          -- text to wright
+            0,                      -- starting at x=0 (centered based on width)
+            20,                     -- starting y - slightly off the top
+            VIRTUAL_WIDTH,          -- number of pixels to center with
+            'center'                -- alignment mode (can be "left", etc.)
+                )
+    end
+    -- setup the larger font for score
+    love.graphics.setFont(scoreFont) 
+    -- score for player 1
+    love.graphics.print(
+        tostring(player1Score),
+        VIRTUAL_WIDTH/2 - 50,
+        VIRTUAL_HEIGHT/3
+                    )
+    -- score for player 2
+    love.graphics.print(
+        tostring(player2Score),
+        VIRTUAL_WIDTH/2 + 30,
+        VIRTUAL_HEIGHT/3
+                    )
+    
+    -- render paddles using their class's reder functions
+    player1:render()
+    player2:render()
+    -- render ball - similar to paddles
+    ball:render()
+    -- end rendering at virtual resolution
+    push:apply('end')
+    -- set up background color - grey
+    love.graphics.setBackgroundColor(.157,.176,.204)
+end

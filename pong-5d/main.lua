@@ -56,3 +56,45 @@ VIRTUAL_HEIGHT = 243
 
 -- setup the pad speed variable - 200 (arbitrary value)
 PADDLE_SPEED = 200
+
+-- game init
+function love.load()
+    -- calling randomseed function, passing the current time in seconds
+    math.randomseed(os.time())
+    -- retro graphic setting
+    love.graphics.setDefaultFilter('nearest', 'nearest')
+
+    -- new font object import - has to be in the same directory
+    smallFont = love.graphics.newFont('font.ttf', 8)
+    -- larger font setup for score
+    scoreFont = love.graphics.newFont('font.ttf', 32)
+
+    -- push setupScreen function for game window settings (resizable - true)
+    push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, 
+    WINDOW_HEIGHT, {
+        fullscreen = false,
+        resizable = true,
+        vsync = true
+    })
+
+    -- initialize scroe variables for both players (used later for rendering)
+    player1Score = 0
+    player2Score = 0
+
+    --[[
+        initialize players paddles - making them global so that other functions 
+        and modules can see them - with new Paddle class
+    ]] 
+    player1Y = Paddle(10, 30, 5, 20)
+    player2Y = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
+
+    -- initialize the ball in the middle of the screen using ball class
+    ball = Ball(VIRTUAL_WIDTH/2 - 2, VIRTUAL_HEIGHT/2 - 2)
+
+    --[[
+        define game state variable that then will be used to transition between
+        different parts of the game - used to determine behavior during render
+        and update state
+    ]] 
+    gameState = 'start'
+end

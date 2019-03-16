@@ -132,3 +132,23 @@ function love.update(dt)
     player1:update(dt)
     player2:update(dt)
 end
+
+-- keypress function - expanded for game state definition
+function love.keypressed(key)
+    -- defining quit game key - escape
+    if key == 'escape' then
+        -- event.quit - a simple function that terminates application
+        love.event.quit()
+    -- defining start game key - enter/return - changes state to "play"
+    elseif key == 'enter' or key == 'return' then
+        -- if the game state is 'start' then set it to 'play'
+        if gameState == 'start' then
+            gameState = 'play'
+        -- otherwise set game state to start and set initial values
+        else
+            gameState = 'start'
+            -- reseting ball's position using the new class approach
+            ball:reset()
+        end
+    end
+end

@@ -51,6 +51,12 @@ function love.load()
     -- retro graphic setting
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
+    --[[
+        to setup the window in which the game will be opened use window.setTitle
+        function 
+    ]]
+    love.window.setTitle('Pong replica')
+
     -- new font object import - has to be in the same directory
     smallFont = love.graphics.newFont('font.ttf', 8)
     -- larger font setup for score

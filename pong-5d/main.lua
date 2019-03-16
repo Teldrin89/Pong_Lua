@@ -85,8 +85,8 @@ function love.load()
         initialize players paddles - making them global so that other functions 
         and modules can see them - with new Paddle class
     ]] 
-    player1Y = Paddle(10, 30, 5, 20)
-    player2Y = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
+    player1 = Paddle(10, 30, 5, 20)
+    player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
 
     -- initialize the ball in the middle of the screen using ball class
     ball = Ball(VIRTUAL_WIDTH/2 - 2, VIRTUAL_HEIGHT/2 - 2)
@@ -97,4 +97,38 @@ function love.load()
         and update state
     ]] 
     gameState = 'start'
+end
+
+-- update(dt) is an update function that runs every frame
+function love.update(dt)
+    -- player 1 movement
+    if love.keyboard.isDown('w') then
+        -- applying the paddle speed using the paddle class functions
+        player1.dy = -PADDLE_SPEED
+    elseif love.keyboard.isDown('s') then
+        player1.dy = PADDLE_SPEED
+    else
+        -- added the case with no key pressed
+        player1.dy = 0
+    end
+
+    -- the same movement setup for player 2 (up and down keys)
+    if love.keyboard.isDown('up') then
+        -- applying the paddle speed using the paddle class functions
+        player2.dy = -PADDLE_SPEED
+    elseif love.keyboard.isDown('down') then
+        player2.dy = PADDLE_SPEED
+    else
+        -- added the case with no key pressed
+        player2.dy = 0
+    end
+    
+    -- update ball using the ball class 
+    if gameState == 'play' then
+        ball:update(dt)
+    end
+
+    -- update both players
+    player1:update(dt)
+    player2:update(dt)
 end

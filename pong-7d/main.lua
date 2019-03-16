@@ -10,7 +10,7 @@
 -- PONG game - replica of 1970s game
 
 
---                  Game 6 update - FPS update
+--                  Game 7 update - collision update
 
 
 -- setup the window width and height for the pong game

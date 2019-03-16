@@ -187,8 +187,27 @@ function love.draw()
     player2:render()
     -- render ball - similar to paddles
     ball:render()
+    -- use new FPS function do display FPS number
+    displayFPS()
     -- end rendering at virtual resolution
     push:apply('end')
     -- set up background color - grey
     love.graphics.setBackgroundColor(.157,.176,.204)
+end
+
+--[[
+    additional functio to display FPS on the screen - using love rendering
+    color and built in FPS timer
+]]
+function displayFPS()
+    -- use the small font for display
+    love.graphics.setFont(smallFont)
+    -- set color to red
+    love.graphics.setColor(1, 0, 0, 1)
+    --[[
+        printout the FPS in top left corner (slightly off) using the 'print'
+        function text and timer.getFPS function (first translated to string and
+        then concatenated with text using '..' operator)
+    ]]
+    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
 end

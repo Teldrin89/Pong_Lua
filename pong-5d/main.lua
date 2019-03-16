@@ -25,7 +25,7 @@ WINDOW_HEIGHT = 720
 push = require 'push'
 --[[
     class is a sort of blueprint for object (for example a car) with 2 
-    distuguished properties: methods (e.g. refuel) and attributes (e.g. color);
+    distinguished properties: methods (e.g. refuel) and attributes (e.g. color);
     defined class owns it's methods and properties so there is no need to define
     seprate functions; the perfect simple cases for classes in pong will be a
     paddle and ball as a class - put in seprate files (usually starting with

@@ -105,6 +105,53 @@ end
 
 -- update(dt) is an update function that runs every frame
 function love.update(dt)
+    if gameState == 'play' then
+        --[[
+            adding ball collision detection with paddles for both players,
+            reversing the speed in x direction, giving it a small increase and
+            altering speed in y direction based on position of collision
+        ]]
+        if ball:collides(player1) then
+            -- reverse speed and increase by 3%
+            ball.dx = -ball.dx * 1.03
+            ball.x = player1.x + 5
+            -- change in sign of velocity in y direction to represent bounce
+            if ball.dy < 0 then
+                ball.dy = -math.random(10,150)
+            else
+                ball.dy = math.random(10, 150)
+            end
+        end
+        --[[ 
+            the same collision detection pattern for player2
+            todo: consider some updates
+        ]]
+        if ball:collides(player2) then
+            -- reverse speed and increase by 3%
+            ball.dx = -ball.dx * 1.03
+            ball.x = player2.x + 5
+            -- change in sign of velocity in y direction to represent bounce
+            if ball.dy < 0 then
+                ball.dy = -math.random(10,150)
+            else
+                ball.dy = math.random(10, 150)
+            end
+        end
+        -- collision detection with bottom of the screen
+        if ball.y <= 0 then
+            ball.y = 0
+            ball.dy = -ball.dy
+        end
+        --[[ 
+            collision detection with top of the screen (-4 to take into account
+            the ball height)
+        ]]
+        if ball.y > VIRTUAL_HEIGHT - 4 then
+            ball.y = VIRTUAL_HEIGHT - 4
+            ball.dy = -ball.dy
+        end
+    end
+
     -- player 1 movement
     if love.keyboard.isDown('w') then
         -- applying the paddle speed using the paddle class functions

@@ -129,7 +129,7 @@ function love.update(dt)
         if ball:collides(player2) then
             -- reverse speed and increase by 3%
             ball.dx = -ball.dx * 1.03
-            ball.x = player2.x + 5
+            ball.x = player2.x - 4
             -- change in sign of velocity in y direction to represent bounce
             if ball.dy < 0 then
                 ball.dy = -math.random(10,150)

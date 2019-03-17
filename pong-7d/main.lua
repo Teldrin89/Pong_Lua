@@ -44,6 +44,20 @@ VIRTUAL_HEIGHT = 243
 -- setup the pad speed variable - 200 (arbitrary value)
 PADDLE_SPEED = 200
 
+--[[
+    AABB collision detection - axis alligned bounding boxes - it means that this
+    type of collision detection works for objects that do not rotate; this type
+    of collision detection is a simple logic of checking the position of each
+    rectangle edges:
+    if rect1.x is not rect2.x + rect2.width and
+       rect1.x + rect1.width is not < rect2.x and
+       rect1.y is not > rect2.y + rect2.height and
+       rect1.y + rect1.height is not < rect2.y:
+          collision is true
+    else
+       collision is false
+]]
+
 -- game init
 function love.load()
     -- calling randomseed function, passing the current time in seconds

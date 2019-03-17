@@ -25,6 +25,29 @@ function Ball:init(x, y, width, height)
 end
 
 --[[
+    additional function for aabb collision detection - checking if ball and 
+    paddle rectangles overlap
+]]
+function Ball:collides(paddle)
+    --[[ 
+        check if left edge of either is farther to the right then the right edge
+        of the other
+    ]]
+    if self.x > paddle.x + paddle.width or paddle.x > self.x + self.width then
+        return false
+    end
+    --[[
+        check if the bottom edge of either pad or ball is lower than the top
+        edge of the other
+    ]]
+    if self.y > paddle.y + paddle.height or paddle.y > self.y + self.height then
+        return false
+    end
+    -- if the above aren't true, paddle and ball are overlapping
+    return true
+end
+
+--[[
     define the reset function for a ball - putting the ball in center of the
     screen on both axes
 ]]

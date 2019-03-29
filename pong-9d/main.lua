@@ -210,16 +210,14 @@ function love.keypressed(key)
     if key == 'escape' then
         -- event.quit - a simple function that terminates application
         love.event.quit()
-    -- defining start game key - enter/return - changes state to "play"
+    -- defining start game key - enter/return
     elseif key == 'enter' or key == 'return' then
-        -- if the game state is 'start' then set it to 'play'
+        -- if the game state is 'start' then set it to 'serve'
         if gameState == 'start' then
+            gameState = 'serve'
+        -- otherwise set game state to play
+        elseif gameState == 'serve'
             gameState = 'play'
-        -- otherwise set game state to start and set initial values
-        else
-            gameState = 'start'
-            -- reseting ball's position using the new class approach
-            ball:reset()
         end
     end
 end

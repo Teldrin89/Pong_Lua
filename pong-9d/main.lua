@@ -216,7 +216,7 @@ function love.keypressed(key)
         if gameState == 'start' then
             gameState = 'serve'
         -- otherwise set game state to play
-        elseif gameState == 'serve'
+        elseif gameState == 'serve' then
             gameState = 'play'
         end
     end

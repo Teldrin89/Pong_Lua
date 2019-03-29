@@ -10,7 +10,7 @@
 -- PONG game - replica of 1970s game
 
 
---                  Game 8 update - keeping score for players
+--                  Game 9 update - state machine
 
 
 -- setup the window width and height for the pong game
@@ -91,7 +91,20 @@ end
 
 -- update(dt) is an update function that runs every frame
 function love.update(dt)
-    if gameState == 'play' then
+    --[[
+        adding a 3rd game state 'serve' that allows after each player scores
+        to reset and the other player to serve the ball (determine x direction
+        of velocity)
+    ]]
+    if gameState == 'serve' then
+        ball.dy = math.random(-50, 50)
+        if servingPlayer == 1 then
+            ball.dx = math.random(140, 200)
+        else
+            ball.dx = -math.random(140, 200)
+        end
+    
+    elseif gameState == 'play' then
         --[[
             adding ball collision detection with paddles for both players,
             reversing the speed in x direction, giving it a small increase and
@@ -140,25 +153,21 @@ function love.update(dt)
         end
     end
 
-    --[[ 
-        if the ball reaches left or right edge of the screen either player1 or
-        player2 should be getting score increment and ball shall be reset
-    ]]
     -- player2 scoring scenario
     if ball.x < 0 then
         servingPlayer = 1
         player2Score = player2Score + 1
         ball:reset()
-        -- goes back to "start" state
-        gameState = 'start'
+        -- goes to "serve" state
+        gameState = 'serve'
     end
     -- player1 scoring scenario
     if ball.x > VIRTUAL_WIDTH then
         servingPlayer = 2
         player1Score = player1Score + 1
         ball:reset()
-        -- goes back to "start" state
-        gameState = 'start'
+        -- goes to "serve" state
+        gameState = 'serve'
     end
     
     -- player 1 movement

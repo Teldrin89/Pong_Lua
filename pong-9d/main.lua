@@ -59,6 +59,8 @@ function love.load()
 
     -- new font object import - has to be in the same directory
     smallFont = love.graphics.newFont('font.ttf', 8)
+    -- medium font
+    mediumFont = love.graphics.newFont('font.ttf', 16)
     -- larger font setup for score
     scoreFont = love.graphics.newFont('font.ttf', 32)
 
@@ -227,24 +229,35 @@ function love.draw()
     -- begin rendering at virtual resolution
     push:apply('start')
     -- draw welcome text with small font
-    love.graphics.setFont(smallFont)
-    -- printf function with game title - depending on the game state
+    love.graphics.setFont(mediumFont)
+    --[[
+        printf function with game title - depending on the game state with 3 in
+        option: start, serve and play
+    ]] 
     if gameState == 'start' then
         love.graphics.printf(
-            'Hello Start!',         -- text to wright
+            'Hello, Welcome to pong!', -- text to wright
             0,                      -- starting at x=0 (centered based on width)
-            20,                     -- starting y - slightly off the top
+            10,                     -- starting y - slightly off the top
             VIRTUAL_WIDTH,          -- number of pixels to center with
             'center'                -- alignment mode (can be "left", etc.)
-                )
-    else
+            )
+        -- 2nd line of text in start state
         love.graphics.printf(
-            'Hello Play!',          -- text to wright
-            0,                      -- starting at x=0 (centered based on width)
-            20,                     -- starting y - slightly off the top
-            VIRTUAL_WIDTH,          -- number of pixels to center with
-            'center'                -- alignment mode (can be "left", etc.)
-                )
+            'Press Enter to start!',  -- text to wright
+            0,                        -- starting at x = 0 (center)
+            20,                       -- 2nd line from the top
+            VIRTUAL_WIDTH,            -- number of pixels to center with
+            'center'                  -- alignment mode
+            )
+    elseif gameState == 'serve' then
+        love.graphics.printf('Player ' .. tostring(servingPlayer) .. 
+        "'s serve!", 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Press Enter to serve!', 0, 20, VIRTUAL_WIDTH,
+        'center')
+    elseif gameState == 'play' then
+        love.graphics.setFont(smallFont)
+        love.graphics.printf('Good luck!', 0, 10, VIRTUAL_WIDTH, 'center')
     end
     -- setup the larger font for score
     love.graphics.setFont(scoreFont) 

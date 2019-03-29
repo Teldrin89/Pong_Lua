@@ -10,7 +10,7 @@
 -- PONG game - replica of 1970s game
 
 
---                  Game 7 update - collision update
+--                  Game 8 update - keeping score for players
 
 
 -- setup the window width and height for the pong game
@@ -44,20 +44,6 @@ VIRTUAL_HEIGHT = 243
 -- setup the pad speed variable - 200 (arbitrary value)
 PADDLE_SPEED = 200
 
---[[
-    AABB collision detection - axis alligned bounding boxes - it means that this
-    type of collision detection works for objects that do not rotate; this type
-    of collision detection is a simple logic of checking the position of each
-    rectangle edges:
-    if rect1.x is not rect2.x + rect2.width and
-       rect1.x + rect1.width is not < rect2.x and
-       rect1.y is not > rect2.y + rect2.height and
-       rect1.y + rect1.height is not < rect2.y:
-          collision is true
-    else
-       collision is false
-]]
-
 -- game init
 function love.load()
     -- calling randomseed function, passing the current time in seconds
@@ -84,7 +70,7 @@ function love.load()
         vsync = true
     })
 
-    -- initialize scroe variables for both players (used later for rendering)
+    -- initialize score variables for both players (incremented per score)
     player1Score = 0
     player2Score = 0
 
@@ -117,8 +103,10 @@ function love.update(dt)
             ball.x = player1.x + 5
             -- change in sign of velocity in y direction to represent bounce
             if ball.dy < 0 then
+                -- randomize y velocity
                 ball.dy = -math.random(30,140)
             else
+                -- randomize y velocity
                 ball.dy = math.random(30, 140)
             end
         end
@@ -152,6 +140,25 @@ function love.update(dt)
         end
     end
 
+    --[[ 
+        if the ball reaches left or right edge of the screen either player1 or
+        player2 should be getting score increment and ball shall be reset
+    ]]
+    -- player2 scoring scenario
+    if ball.x < 0 then
+        servingPlayer = 1
+        player2Score = player2Score + 1
+        ball:reset()
+        gameState = 'serve'
+    end
+    -- player1 scoring scenario
+    if ball.x > VIRTUAL_WIDTH then
+        servingPlayer = 2
+        player1Score = player1Score + 1
+        ball:reset()
+        gameState = 'serve'
+    end
+    
     -- player 1 movement
     if love.keyboard.isDown('w') then
         -- applying the paddle speed using the paddle class functions

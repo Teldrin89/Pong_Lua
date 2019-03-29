@@ -60,7 +60,7 @@ function love.load()
     -- new font object import - has to be in the same directory
     smallFont = love.graphics.newFont('font.ttf', 8)
     -- medium font
-    mediumFont = love.graphics.newFont('font.ttf', 16)
+    mediumFont = love.graphics.newFont('font.ttf', 13)
     -- larger font setup for score
     scoreFont = love.graphics.newFont('font.ttf', 32)
 
@@ -246,14 +246,14 @@ function love.draw()
         love.graphics.printf(
             'Press Enter to start!',  -- text to wright
             0,                        -- starting at x = 0 (center)
-            20,                       -- 2nd line from the top
+            25,                       -- 2nd line from the top
             VIRTUAL_WIDTH,            -- number of pixels to center with
             'center'                  -- alignment mode
             )
     elseif gameState == 'serve' then
         love.graphics.printf('Player ' .. tostring(servingPlayer) .. 
         "'s serve!", 0, 10, VIRTUAL_WIDTH, 'center')
-        love.graphics.printf('Press Enter to serve!', 0, 20, VIRTUAL_WIDTH,
+        love.graphics.printf('Press Enter to serve!', 0, 25, VIRTUAL_WIDTH,
         'center')
     elseif gameState == 'play' then
         love.graphics.setFont(smallFont)

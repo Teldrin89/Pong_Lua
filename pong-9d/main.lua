@@ -60,7 +60,7 @@ function love.load()
     -- new font object import - has to be in the same directory
     smallFont = love.graphics.newFont('font.ttf', 8)
     -- medium font
-    mediumFont = love.graphics.newFont('font.ttf', 13)
+    mediumFont = love.graphics.newFont('font.ttf', 12)
     -- larger font setup for score
     scoreFont = love.graphics.newFont('font.ttf', 32)
 
@@ -98,6 +98,7 @@ function love.update(dt)
         to reset and the other player to serve the ball (determine x direction
         of velocity)
     ]]
+    -- TODO: finished at 1:22:00 -> move to pong-10d
     if gameState == 'serve' then
         ball.dy = math.random(-50, 50)
         if servingPlayer == 1 then

@@ -59,8 +59,8 @@ function love.load()
 
     -- new font object import - has to be in the same directory
     smallFont = love.graphics.newFont('font.ttf', 8)
-    -- medium font
-    mediumFont = love.graphics.newFont('font.ttf', 12)
+    -- medium font - only slightly larger than small
+    mediumFont = love.graphics.newFont('font.ttf', 10)
     -- larger font setup for score
     scoreFont = love.graphics.newFont('font.ttf', 32)
 
@@ -89,6 +89,8 @@ function love.load()
         and update state
     ]] 
     gameState = 'start'
+    -- adding the 1st serving player as player 1
+    servingPlayer = 1
 end
 
 -- update(dt) is an update function that runs every frame
@@ -228,7 +230,7 @@ function love.draw()
     -- begin rendering at virtual resolution
     push:apply('start')
     -- draw welcome text with small font
-    love.graphics.setFont(mediumFont)
+    love.graphics.setFont(smallFont)
     --[[
         printf function with game title - depending on the game state with 3 in
         option: start, serve and play

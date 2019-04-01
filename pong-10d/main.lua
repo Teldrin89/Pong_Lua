@@ -100,7 +100,6 @@ function love.update(dt)
         to reset and the other player to serve the ball (determine x direction
         of velocity)
     ]]
-    -- TODO: finished at 1:22:00 -> move to pong-10d
     if gameState == 'serve' then
         ball.dy = math.random(-50, 50)
         if servingPlayer == 1 then
@@ -185,7 +184,7 @@ function love.update(dt)
             winningPlayer = 1
             gameState = 'done'
         else
-            gameState = 'server'
+            gameState = 'serve'
             ball:reset()
         end
     end
@@ -237,7 +236,7 @@ function love.keypressed(key)
         elseif gameState == 'serve' then
             gameState = 'play'
         -- added the condition for 'done' state
-        elseif gameState = 'done' then
+        elseif gameState == 'done' then
             -- simply re-start the game with erased score board
             gameState = 'serve'
             ball:reset()
@@ -259,6 +258,8 @@ function love.draw()
     push:apply('start')
     -- draw welcome text with small font
     love.graphics.setFont(smallFont)
+    -- run a display score function
+    displayScore()
     --[[
         printf function with game title - depending on the game state with 3 in
         option: start, serve and play
@@ -301,20 +302,6 @@ function love.draw()
         love.graphics.printf('Press Enter to start over!', 0, 30,
             VIRTUAL_WIDTH, 'center')
     end
-    -- setup the larger font for score
-    love.graphics.setFont(scoreFont) 
-    -- score for player 1
-    love.graphics.print(
-        tostring(player1Score),
-        VIRTUAL_WIDTH/2 - 50,
-        VIRTUAL_HEIGHT/3
-                    )
-    -- score for player 2
-    love.graphics.print(
-        tostring(player2Score),
-        VIRTUAL_WIDTH/2 + 30,
-        VIRTUAL_HEIGHT/3
-                    )
     
     -- render paddles using their class's reder functions
     player1:render()
@@ -344,4 +331,17 @@ function displayFPS()
         then concatenated with text using '..' operator)
     ]]
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
+end
+--[[
+    adding the display function for score - taking these lines out of the
+    draw function
+]]
+function displayScore()
+    -- draw score on the left and right center of the screen
+    --change font to score font
+    love.graphics.setFont(scoreFont)
+    love.graphics.print(tostring(player1Score), VIRTUAL_WIDTH/2 - 50,
+        VIRTUAL_HEIGHT/3)
+    love.graphics.print(tostring(player2Score), VIRTUAL_WIDTH/2 + 50,
+        VIRTUAL_HEIGHT/3)
 end

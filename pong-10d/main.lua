@@ -68,7 +68,7 @@ function love.load()
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, 
     WINDOW_HEIGHT, {
         fullscreen = false,
-        resizable = true,
+        resizable = false,
         vsync = true
     })
 
@@ -154,41 +154,39 @@ function love.update(dt)
             ball.y = VIRTUAL_HEIGHT - 4
             ball.dy = -ball.dy
         end
-    end
-
-    -- player2 scoring scenario
-    if ball.x < 0 then
-        servingPlayer = 1
-        player2Score = player2Score + 1
-        --[[
-            adding additional logic for the point at which one of the players
-            reach 10 points and wins a game
-        ]]
-        if player2Score == 10 then
-            winningPlayer = 2
-            -- ends game with 'done' state
-            gameState = 'done'
-        else
-            -- sets game to 'serve' state
-            gameState = 'serve'
-            -- reset the ball to original position
-            ball:reset()
+        -- player2 scoring scenario
+        if ball.x < 0 then
+            servingPlayer = 1
+            player2Score = player2Score + 1
+            --[[
+                adding additional logic for the point at which one of the players
+                reach 10 points and wins a game
+            ]]
+            if player2Score == 10 then
+                winningPlayer = 2
+                -- ends game with 'done' state
+                gameState = 'done'
+            else
+                -- sets game to 'serve' state
+                gameState = 'serve'
+                -- reset the ball to original position
+                ball:reset()
+            end
+        end
+        -- player1 scoring scenario
+        if ball.x > VIRTUAL_WIDTH then
+            servingPlayer = 2
+            player1Score = player1Score + 1
+            -- same logic as for player 2 is applied for player 1
+            if player1Score == 10 then
+                winningPlayer = 1
+                gameState = 'done'
+            else
+                gameState = 'serve'
+                ball:reset()
+            end
         end
     end
-    -- player1 scoring scenario
-    if ball.x > VIRTUAL_WIDTH then
-        servingPlayer = 2
-        player1Score = player1Score + 1
-        -- same logic as for player 2 is applied for player 1
-        if player1Score == 10 then
-            winningPlayer = 1
-            gameState = 'done'
-        else
-            gameState = 'serve'
-            ball:reset()
-        end
-    end
-    
     -- player 1 movement
     if love.keyboard.isDown('w') then
         -- applying the paddle speed using the paddle class functions
@@ -256,10 +254,10 @@ end
 function love.draw()
     -- begin rendering at virtual resolution
     push:apply('start')
-    -- draw welcome text with small font
-    love.graphics.setFont(smallFont)
     -- run a display score function
     displayScore()
+    -- draw welcome text with small font
+    love.graphics.setFont(smallFont)
     --[[
         printf function with game title - depending on the game state with 3 in
         option: start, serve and play
@@ -294,7 +292,7 @@ function love.draw()
         -- set font to medium for winning message
         love.graphics.setFont(mediumFont)
         -- printout winning message
-        love.graphics.printf('Player' ..tostring(winningPlayer) .. 'wins!',
+        love.graphics.printf('Player ' ..tostring(winningPlayer) .. ' wins!',
             0, 10, VIRTUAL_WIDTH, 'center')
         -- set font to small
         love.graphics.setFont(smallFont)
@@ -302,7 +300,7 @@ function love.draw()
         love.graphics.printf('Press Enter to start over!', 0, 30,
             VIRTUAL_WIDTH, 'center')
     end
-    
+
     -- render paddles using their class's reder functions
     player1:render()
     player2:render()

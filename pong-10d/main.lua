@@ -10,7 +10,7 @@
 -- PONG game - replica of 1970s game
 
 
---                  Game 9 update - state machine
+--                  Game 10 update - victory update
 
 
 -- setup the window width and height for the pong game
@@ -59,8 +59,8 @@ function love.load()
 
     -- new font object import - has to be in the same directory
     smallFont = love.graphics.newFont('font.ttf', 8)
-    -- medium font - only slightly larger than small
-    mediumFont = love.graphics.newFont('font.ttf', 10)
+    -- medium font - used in 'done' state of game UI
+    mediumFont = love.graphics.newFont('font.ttf', 16)
     -- larger font setup for score
     scoreFont = love.graphics.newFont('font.ttf', 32)
 
@@ -108,7 +108,6 @@ function love.update(dt)
         else
             ball.dx = -math.random(140, 200)
         end
-    
     elseif gameState == 'play' then
         --[[
             adding ball collision detection with paddles for both players,
@@ -162,17 +161,33 @@ function love.update(dt)
     if ball.x < 0 then
         servingPlayer = 1
         player2Score = player2Score + 1
-        ball:reset()
-        -- goes to "serve" state
-        gameState = 'serve'
+        --[[
+            adding additional logic for the point at which one of the players
+            reach 10 points and wins a game
+        ]]
+        if player2Score == 10 then
+            winningPlayer = 2
+            -- ends game with 'done' state
+            gameState = 'done'
+        else
+            -- sets game to 'serve' state
+            gameState = 'serve'
+            -- reset the ball to original position
+            ball:reset()
+        end
     end
     -- player1 scoring scenario
     if ball.x > VIRTUAL_WIDTH then
         servingPlayer = 2
         player1Score = player1Score + 1
-        ball:reset()
-        -- goes to "serve" state
-        gameState = 'serve'
+        -- same logic as for player 2 is applied for player 1
+        if player1Score == 10 then
+            winningPlayer = 1
+            gameState = 'done'
+        else
+            gameState = 'server'
+            ball:reset()
+        end
     end
     
     -- player 1 movement
@@ -221,6 +236,19 @@ function love.keypressed(key)
         -- otherwise set game state to play
         elseif gameState == 'serve' then
             gameState = 'play'
+        -- added the condition for 'done' state
+        elseif gameState = 'done' then
+            -- simply re-start the game with erased score board
+            gameState = 'serve'
+            ball:reset()
+            player1Score = 0
+            player2Score = 0
+            -- set serving player based on the one who won the finished game
+            if winningPlayer == 1 then
+                servingPlayer = 2
+            else
+                servingPlayer = 1
+            end
         end
     end
 end
@@ -259,6 +287,19 @@ function love.draw()
     elseif gameState == 'play' then
         love.graphics.setFont(smallFont)
         love.graphics.printf('Good luck!', 0, 10, VIRTUAL_WIDTH, 'center')
+    -- adding the render option for 'done' state
+    elseif gameState == 'done' then
+        -- UI messages
+        -- set font to medium for winning message
+        love.graphics.setFont(mediumFont)
+        -- printout winning message
+        love.graphics.printf('Player' ..tostring(winningPlayer) .. 'wins!',
+            0, 10, VIRTUAL_WIDTH, 'center')
+        -- set font to small
+        love.graphics.setFont(smallFont)
+        -- printout info about game restart
+        love.graphics.printf('Press Enter to start over!', 0, 30,
+            VIRTUAL_WIDTH, 'center')
     end
     -- setup the larger font for score
     love.graphics.setFont(scoreFont) 

@@ -64,6 +64,20 @@ function love.load()
     -- larger font setup for score
     scoreFont = love.graphics.newFont('font.ttf', 32)
 
+    --[[
+        set up sound effect for: wall hit, paddle hit and score; all of the
+        sound files are .wav files and all are stored in single table
+    ]]
+    sounds = {
+        ['paddle_hit'] = love.audio.newSource(
+            'sounds/paddle_hit.wav', 'static'),
+        ['score'] = love.audio.newSource(
+            'sounds/score.wav', 'static'),
+        ['wall_hit'] = love.audio.newSource(
+            'sounds/wall_hit.wav', 'static')
+    }
+
+
     -- push setupScreen function for game window settings (resizable - true)
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, 
     WINDOW_HEIGHT, {
@@ -125,6 +139,8 @@ function love.update(dt)
                 -- randomize y velocity
                 ball.dy = math.random(30, 140)
             end
+            -- add sound for paddle hit
+            sounds['paddle_hit']:play()
         end
         --[[ 
             the same collision detection pattern for player2
@@ -140,11 +156,16 @@ function love.update(dt)
             else
                 ball.dy = math.random(30, 140)
             end
+
+            -- add sound for paddle hit
+            sounds['paddle_hit']:play()
         end
         -- collision detection with bottom of the screen
         if ball.y <= 0 then
             ball.y = 0
             ball.dy = -ball.dy
+            -- add sound for wall hit
+            sounds['wall_hit']:play()
         end
         --[[ 
             collision detection with top of the screen (-4 to take into account
@@ -153,11 +174,15 @@ function love.update(dt)
         if ball.y > VIRTUAL_HEIGHT - 4 then
             ball.y = VIRTUAL_HEIGHT - 4
             ball.dy = -ball.dy
+            -- add sound for wall hit
+            sounds['wall_hit']:play()
         end
         -- player2 scoring scenario
         if ball.x < 0 then
             servingPlayer = 1
             player2Score = player2Score + 1
+            -- add sound for score point
+            sounds['score']:play()
             --[[
                 adding additional logic for the point at which one of the players
                 reach 10 points and wins a game
@@ -177,6 +202,8 @@ function love.update(dt)
         if ball.x > VIRTUAL_WIDTH then
             servingPlayer = 2
             player1Score = player1Score + 1
+            -- add sound for score point
+            sounds['score']:play()
             -- same logic as for player 2 is applied for player 1
             if player1Score == 10 then
                 winningPlayer = 1

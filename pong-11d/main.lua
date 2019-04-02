@@ -82,7 +82,8 @@ function love.load()
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, 
     WINDOW_HEIGHT, {
         fullscreen = false,
-        resizable = false,
+        -- change the resizable to 'true' to then be able to resize window
+        resizable = true,
         vsync = true
     })
 
@@ -105,6 +106,16 @@ function love.load()
     gameState = 'start'
     -- adding the 1st serving player as player 1
     servingPlayer = 1
+end
+
+--[[
+    additional love2d resize function that will resize the screen - in here
+    there is additional line of code that refers to push library that will
+    also resize the virtual height and width of the game window, to keep its
+    retro look
+]]
+function love.resize(w, h)
+    push:resize(w, h)
 end
 
 -- update(dt) is an update function that runs every frame

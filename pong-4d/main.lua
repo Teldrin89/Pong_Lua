@@ -22,7 +22,7 @@ WINDOW_HEIGHT = 720
     resolution but a the window size that was already defined above
     https://github.com/Ulydev/push
 ]]
-push = require 'push'
+-- push = require 'push'
 
 -- set up virtual resolution width and height
 VIRTUAL_WIDTH = 432
@@ -56,13 +56,15 @@ function love.load()
     love.graphics.setFont(smallFont)
 
     -- push setupScreen function for game window settings
+    --[[
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, 
     WINDOW_HEIGHT, {
         fullscreen = false,
         resizable = false,
         vsync = true
     })
-
+    ]]
+    love.window.setMode(VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
     -- initialize scroe variables for both players (used later for rendering)
     player1Score = 0
     player2Score = 0
@@ -166,7 +168,7 @@ end
 -- call draw function
 function love.draw()
     -- begin rendering at virtual resolution
-    push:apply('start')
+    -- push:apply('start')
     -- draw welcome text with small font
     love.graphics.setFont(smallFont)
     -- printf function with game title - depending on the game state
@@ -207,8 +209,9 @@ function love.draw()
     love.graphics.rectangle('fill', VIRTUAL_WIDTH-10, player2Y, 5, 20)
     -- render ball (at center) - use the new ball X and Y coordinates
     love.graphics.rectangle('fill', ballX, ballY, 4, 4)
-    -- end rendering at virtual resolution
-    push:apply('end')
-    -- set up background color - grey
     love.graphics.setBackgroundColor(.157,.176,.204)
+    -- end rendering at virtual resolution
+    -- push:apply('end')
+    -- set up background color - grey
+    -- love.graphics.setBackgroundColor(.157,.176,.204)
 end

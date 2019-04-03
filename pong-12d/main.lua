@@ -84,10 +84,11 @@ function love.load()
     WINDOW_HEIGHT, {
         fullscreen = false,
         -- change the resizable to 'true' to then be able to resize window
-        resizable = true,
+        resizable = false,
         vsync = true
     })
-
+    thing = 1 --love.window.getDPIScale()
+    -- thing2 = love.window.getPixelScale()
     -- initialize score variables for both players (incremented per score)
     player1Score = 0
     player2Score = 0
@@ -292,7 +293,7 @@ end
 -- call draw function
 function love.draw()
     -- begin rendering at virtual resolution
-    push:apply('start')
+    push:start()
     -- run a display score function
     displayScore()
     -- draw welcome text with small font
@@ -314,6 +315,14 @@ function love.draw()
             'Press Enter to start!',  -- text to wright
             0,                        -- starting at x = 0 (center)
             25,                       -- 2nd line from the top
+            VIRTUAL_WIDTH,            -- number of pixels to center with
+            'center'                  -- alignment mode
+            )
+        -- 3rd line of text in start state
+        love.graphics.printf(
+            'thing ' .. tostring(thing) .. ' value',   -- text to wright
+            0,                        -- starting at x = 0 (center)
+            45,                       -- 2nd line from the top
             VIRTUAL_WIDTH,            -- number of pixels to center with
             'center'                  -- alignment mode
             )
@@ -348,7 +357,7 @@ function love.draw()
     -- use new FPS function do display FPS number
     displayFPS()
     -- end rendering at virtual resolution
-    push:apply('end')
+    push:finish()
     -- set up background color - grey
     love.graphics.setBackgroundColor(.157,.176,.204)
 end

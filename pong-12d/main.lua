@@ -6,7 +6,10 @@ WINDOW_HEIGHT = 720
 
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
-
+--[[ 
+    TODO: next thing to check is to update push library to reference the config
+    lua file and use it to change window settings of width and height
+]]
 PADDLE_SPEED = 200
 
 function love.load()

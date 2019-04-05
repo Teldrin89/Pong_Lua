@@ -10,9 +10,9 @@ conf = require 'conf'
 local love11 = love.getVersion() --== 11
 local getDPI = 1 and love11 and love.window.getDPIScale or love.window.getPixelScale
 local windowUpdateMode = love11 and love.window.updateMode or function(width, height, settings)
-  local _, _, flags = love.window.getMode()
+  --local _, _, flags = love.window.getMode()
   for k, v in pairs(settings) do flags[k] = v end
-  love.window.setMode(width, height, flags)
+  -- love.window.setMode(width, height, flags)
   --conf:love.conf.t.window.width = width
   --conf:love.conf.t.window.height = height
 end

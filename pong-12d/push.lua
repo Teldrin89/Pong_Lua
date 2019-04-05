@@ -7,7 +7,7 @@
 
 conf = require 'conf'
 
-local love11 = love.getVersion() == 11
+local love11 = 11 -- love.getVersion() == 11
 local getDPI = 1 and love11 and love.window.getDPIScale or love.window.getPixelScale
 local windowUpdateMode = love11 and love.window.updateMode or function(width, height, settings)
   local _, _, flags = love.window.getMode()

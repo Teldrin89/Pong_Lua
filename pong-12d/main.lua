@@ -13,10 +13,7 @@ WINDOW_HEIGHT = 720
 
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
---[[ 
-    TODO: next thing to check is to update push library to reference the config
-    lua file and use it to change window settings of width and height
-]]
+
 PADDLE_SPEED = 200
 
 function love.load()
@@ -26,6 +23,7 @@ function love.load()
 
     love.window.setTitle('Pong replica')
     smallFont = love.graphics.newFont('font.ttf', 8)
+    mediumFont = love.graphics.newFont('font.ttf', 16)
     scoreFont = love.graphics.newFont('font.ttf', 32)
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, 
@@ -35,6 +33,14 @@ function love.load()
         vsync = true
     })
 
+    player1Score = 0
+    player2Score = 0
+
+    player1 = Paddle(10, 30, 5, 20)
+    player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
+    ball = Ball(VIRTUAL_WIDTH/2 - 2, VIRTUAL_HEIGHT/2 - 2, 4, 4)
+
+    servingPlayer = 1
     gameState = 'start'
 
 end

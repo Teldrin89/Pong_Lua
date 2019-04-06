@@ -67,7 +67,7 @@ html, body
 <div id="wrapper">
 	<h1 id="title">Pong</h1>
 	<div id="main">
-		<center style="margin-bottom:10px">Lua version of popular Pong game deployed to web</center>
+		<center style="margin-bottom:10px">Lua version of Pong game deployed to web</center>
 		<center><canvas id="canvas" width="1280" height="720" style="max-width:100%;background:#000;vertical-align:middle"></canvas></center>
 	</div>
 </div>
@@ -77,7 +77,6 @@ var TXT =
 {
 	PLAYBTN: 'Click here to launch the game',
 	LOAD:    'Downloading Game',
-	PARSE:   'Preparing Game',
 	EXECUTE: 'Starting Game',
 	DLERROR: 'Error while downloading game data.\nCheck your internet connection.',
 	NOWEBGL: 'Your browser or graphics card does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation">WebGL</a>.<br>Find out how to get it <a href="http://get.webgl.org/">here</a>.',
@@ -112,35 +111,14 @@ var DoExecute = function()
 var DoLoad = function()
 {
 	Msg(TXT.LOAD);
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', 'Pong_Game.js');
-	xhr.onprogress = function(e)
-	{
-		if (!e.lengthComputable || ctx.pCnt++ < 5) return;
-		var x = canvas.width/2-150, y = canvas.height*.6, w = Math.min(e.loaded/e.total,1)*300, g = ctx.createLinearGradient(x,0,x+w,0);
-		g.addColorStop(0,'#72d3ff');g.addColorStop(1,'#a2d4ea');
-		ctx.fillStyle = '#1497ce'; ctx.fillRect(x-2,y-2,304,28);
-		ctx.fillStyle = '#FFFFFF'; ctx.fillRect(x  ,y  ,300,24);
-		ctx.fillStyle = g;         ctx.fillRect(x  ,y  ,w,  24);
-	};
-	xhr.onerror = xhr.onabort = function() { Msg(TXT.DLERROR); canvas.disabled = false; };
-	xhr.onload = function()
-	{
-		if (xhr.status != 200) { Msg(TXT.DLERROR + '<br>Status: ' + xhr.statusText ); canvas.disabled = false; return; }
-		Msg(TXT.PARSE);
-		setTimeout(function()
-		{
-			window.onerror = function(e,u,l) { Fail(e+'<br>('+u+':'+l+')'); };
-			Module = { TOTAL_MEMORY: 1024*1024*24, TOTAL_STACK: 1024*1024*2, currentScriptUrl: '-', preInit: DoExecute };
-			var s = document.createElement('script'), d = document.documentElement;
-			s.textContent = xhr.response;
-			d.appendChild(s);
-			d.removeChild(s);
-			xhr = xhr.response = s = s.textContent = null;
-		},50);
-	};
-	xhr.send();
-}
+	window.onerror = function(e,u,l) { Fail(e+'<br>('+u+':'+l+')'); };
+	Module = { TOTAL_MEMORY: 1024*1024*24, TOTAL_STACK: 1024*1024*2, currentScriptUrl: '-', preInit: DoExecute };
+	var s = document.createElement('script'), d = document.documentElement;
+	s.src = 'Pong_Game.js';
+	s.async = true;
+	s.onerror = function(e) { d.removeChild(s); Msg(TXT.DLERROR); canvas.disabled = false; };
+	d.appendChild(s);
+};
 var DoSetup = function()
 {
 	canvas.onclick = function()
@@ -148,7 +126,6 @@ var DoSetup = function()
 		if (canvas.disabled) return;
 		canvas.disabled = true;
 		canvas.scrollIntoView();
-		ctx.pCnt = 0;
 		DoLoad();
 	};
 	ctx.fillStyle = '#888';

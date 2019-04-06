@@ -9,13 +9,13 @@ conf = require 'conf'
 
 local love11 = love.getVersion() --== 11
 local getDPI = 1 and love11 and love.window.getDPIScale or love.window.getPixelScale
-local windowUpdateMode = love11 and love.window.updateMode or function(width, height, settings)
+--local windowUpdateMode = love11 and love.window.updateMode or function(width, height, settings)
   --local _, _, flags = love.window.getMode()
-  for k, v in pairs(settings) do flags[k] = v end
+  --for k, v in pairs(settings) do flags[k] = v end
   -- love.window.setMode(width, height, flags)
   --conf:love.conf.t.window.width = width
   --conf:love.conf.t.window.height = height
-end
+--end
 
 local push = {
   
@@ -48,12 +48,12 @@ function push:setupScreen(WWIDTH, WHEIGHT, RWIDTH, RHEIGHT, settings)
   self:applySettings(self.defaults) --set defaults first
   self:applySettings(settings) --then fill with custom settings
   
-  windowUpdateMode(self._RWIDTH, self._RHEIGHT, {
+  --[[windowUpdateMode(self._RWIDTH, self._RHEIGHT, {
     fullscreen = self._fullscreen,
     resizable = self._resizable,
     highdpi = self._highdpi
-  })
-
+    })
+  ]]
   self:initValues()
 
   if self._canvas then

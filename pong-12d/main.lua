@@ -3,6 +3,11 @@
 
 push = require 'push'
 
+Class = require 'class'
+
+require 'Paddle'
+require 'Ball'
+
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
@@ -15,7 +20,11 @@ VIRTUAL_HEIGHT = 243
 PADDLE_SPEED = 200
 
 function love.load()
+    math.randomseed(os.time())
 
+    love.graphics.setDefaultFilter('nearest', 'nearest')
+
+    love.window.setTitle('Pong replica')
     smallFont = love.graphics.newFont('font.ttf', 8)
     scoreFont = love.graphics.newFont('font.ttf', 32)
 

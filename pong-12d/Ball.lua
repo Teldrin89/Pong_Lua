@@ -22,8 +22,7 @@ function Ball:init(x, y, width, height)
     -- additional information in initialization function - velocity
     self.dy = math.random(2) == 1 and -100 or 100
     -- additional randomization introduced to velocity in x direction
-    self.dx = math.random(2) == 1 and math.random(-80, -100) or math.random(
-        80, 100)
+    self.dx = math.random(2) == 1 and (-1*math.random(80, 100)) or math.random(80, 100)
 end
 
 --[[

@@ -75,7 +75,7 @@ end
 function love.draw()
 
     push:apply('start')
-
+    displayScore()
     love.graphics.setFont(smallFont)
 
     if gameState == 'start' then
@@ -91,4 +91,14 @@ function love.draw()
     push:apply('end')
     
     love.graphics.setBackgroundColor(.157,.176,.204)
+end
+
+function displayScore()
+    -- draw score on the left and right center of the screen
+    --change font to score font
+    love.graphics.setFont(scoreFont)
+    love.graphics.print(tostring(player1Score), VIRTUAL_WIDTH/2 - 50,
+        VIRTUAL_HEIGHT/3)
+    love.graphics.print(tostring(player2Score), VIRTUAL_WIDTH/2 + 50,
+        VIRTUAL_HEIGHT/3)
 end

@@ -79,14 +79,23 @@ function love.draw()
     love.graphics.setFont(smallFont)
 
     if gameState == 'start' then
-        love.graphics.printf("Hello, Welcome to start!", 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf("Hello, Welcome to Pong!", 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf("Press Enter to start!", 0, 25, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'serve' then
-        love.graphics.printf("Hello, Welcome to serve!", 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf("Player " .. tostring(servingPlayer) .. "'s serve!", 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf("Press Enter to serve!", 0, 25, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
-        love.graphics.printf("Hello, Welcome to play!", 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf("Good luck!", 0, 10, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'done' then
-        love.graphics.printf("Hello, Welcome to done!", 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.setFont(mediumFont)
+        love.graphics.printf("Player " .. tostring(servingPlayer) .. "wins!", 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.setFont(smallFont)
+        love.graphics.printf("Press Enter to start over", 0, 30, VIRTUAL_WIDTH, 'center')
     end
+    
+    player1:render()
+    player2:render()
+    ball:render()
 
     push:apply('end')
     

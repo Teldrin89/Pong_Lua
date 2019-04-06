@@ -16,6 +16,9 @@ PADDLE_SPEED = 200
 
 function love.load()
 
+    smallFont = love.graphics.newFont('font.ttf', 8)
+    scoreFont = love.graphics.newFont('font.ttf', 32)
+
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, 
     WINDOW_HEIGHT, {
         fullscreen = false,
@@ -30,6 +33,8 @@ end
 function love.draw()
 
     push:apply('start')
+
+    love.graphics.setFont(smallFont)
 
     if gameState == 'start' then
         love.graphics.printf("Hello, Welcome to start!", 0, 10, VIRTUAL_WIDTH, 'center')

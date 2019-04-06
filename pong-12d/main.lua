@@ -30,6 +30,33 @@ function love.load()
 
 end
 
+function love.keypressed(key)
+    -- defining quit game key - escape
+    if key == 'escape' then
+        -- event.quit - a simple function that terminates application
+        love.event.quit()
+    -- defining start game key - enter/return - changes state to "play"
+    elseif key == 'enter' or key == 'return' then
+        -- if the game state is 'start' then set it to 'play'
+        if gameState == 'start' then
+            gameState = 'play'
+        -- otherwise set game state to start and set initial values
+        else
+            gameState = 'start'
+            -- set ball's starting position - middle of the screen
+            ballX = VIRTUAL_WIDTH/2 - 2
+            ballY = VIRTUAL_HEIGHT/2 - 2
+            --[[
+                set ball's initial velocity in X and Y direction using the
+                math.random and using the same ternary operation as in load 
+                function
+            ]]
+            ballDX = math.random(2) == 1 and 100 or -100
+            ballDY = math.random(-50, 50)
+        end
+    end
+end
+
 function love.draw()
 
     push:apply('start')
